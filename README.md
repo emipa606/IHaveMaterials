@@ -30,3 +30,6 @@ Conflicts with other mods that replace the Designator_Build.ProcessInput functio
 -  Use https://github.com/RimSort/RimSort/releases/latest]RimSort to sort your mods
 
 
+
+https://steamcommunity.com/sharedfiles/filedetails/changelog/3091169851]![Image](https://img.shields.io/github/v/release/emipa606/IHaveMaterials?label=latest%20version&style=plastic&color=9f1111&labelColor=black)
+

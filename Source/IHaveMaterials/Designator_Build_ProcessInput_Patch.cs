@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -21,7 +20,7 @@ internal static class Designator_Build_ProcessInput_Patch
     [HarmonyPrefix]
     private static bool Prefix(Designator_Build __instance, BuildableDef ___entDef)
     {
-        if (!(bool)CheckCanInteract.Invoke(__instance, Array.Empty<object>()))
+        if (!(bool)CheckCanInteract.Invoke(__instance, []))
         {
             return true;
         }
