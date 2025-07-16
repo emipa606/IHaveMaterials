@@ -9,7 +9,7 @@ public class IHaveMaterials : ModBase
 {
     internal static IHaveMaterials Instance;
 
-    public readonly Dictionary<ThingDef, SettingHandle<bool>> Stuff = new Dictionary<ThingDef, SettingHandle<bool>>();
+    public readonly Dictionary<ThingDef, SettingHandle<bool>> Stuff = new();
 
     public SettingHandle<bool> StonyFromMap;
 

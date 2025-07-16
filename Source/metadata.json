@@ -2,5 +2,17 @@
   "Continued": true,
   "CanAdd": "0",
   "CanRemove": "0",
-  "PreviewVersion": "1.5"
+  "PreviewVersion": "1.6",
+  "Patches": false,
+  "Defs": false,
+  "Assemblies": true,
+  "LinesOfCode": 4898,
+  "LinesOfXML": 0,
+  "CodeBaseSize": 60,
+  "LastXmlCleaning": "2025-07-16T21:06:28.0230426+02:00",
+  "SocialImageSet": true,
+  "SearchTags": [
+    " resources",
+    " construction"
+  ]
 }

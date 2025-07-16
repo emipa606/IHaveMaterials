@@ -7,8 +7,8 @@ using Verse;
 
 namespace IHaveMaterials;
 
-[HarmonyPatch]
-internal static class Designator_Build_ProcessInput_Patch
+[HarmonyPatch(typeof(Designator_Build), nameof(Designator_Build.ProcessInput), typeof(Event))]
+internal static class Designator_Build_ProcessInput
 {
     private static readonly MethodInfo CheckCanInteract =
         AccessTools.Method(typeof(Designator_Build), "CheckCanInteract");
@@ -16,8 +16,6 @@ internal static class Designator_Build_ProcessInput_Patch
     private static readonly FieldInfo stuffDef = AccessTools.Field(typeof(Designator_Build), "stuffDef");
     private static readonly FieldInfo writeStuff = AccessTools.Field(typeof(Designator_Build), "writeStuff");
 
-    [HarmonyPatch(typeof(Designator_Build), nameof(Designator_Build.ProcessInput), typeof(Event))]
-    [HarmonyPrefix]
     private static bool Prefix(Designator_Build __instance, BuildableDef ___entDef)
     {
         if (!(bool)CheckCanInteract.Invoke(__instance, []))
@@ -90,11 +88,4 @@ internal static class Designator_Build_ProcessInput_Patch
 
         return false;
     }
-
-    //[HarmonyReversePatch]
-    //[HarmonyPatch(typeof(Designator), nameof(Designator.ProcessInput), typeof(Event))]
-    //private static void BaseProcessInput()
-    //{
-    //    throw new NotImplementedException("reverse patch somehow failed");
-    //}
 }
