@@ -7,15 +7,13 @@ namespace IHaveMaterials;
 
 public class IHaveMaterialsSettings : ModSettings
 {
-    public bool StonyFromMap = true;
-
+    // Runtime cache
+    public readonly Dictionary<ThingDef, bool> Stuff = new();
     private Vector2 scrollPosition = Vector2.zero;
+    public bool StonyFromMap = true;
 
     // Serialized
     public Dictionary<string, bool> StuffByDefName = new();
-
-    // Runtime cache
-    public Dictionary<ThingDef, bool> Stuff = new();
 
     public void RebuildStuffIfNeeded()
     {
@@ -24,11 +22,13 @@ public class IHaveMaterialsSettings : ModSettings
         foreach (var thing in DefDatabase<ThingDef>.AllDefs)
         {
             if (!thing.IsStuff)
+            {
                 continue;
+            }
 
-            bool defaultValue = thing.stuffProps.commonality >= 1f;
+            var defaultValue = thing.stuffProps.commonality >= 1f;
 
-            if (!StuffByDefName.TryGetValue(thing.defName, out bool enabled))
+            if (!StuffByDefName.TryGetValue(thing.defName, out var enabled))
             {
                 enabled = defaultValue;
                 StuffByDefName[thing.defName] = enabled;
@@ -43,20 +43,21 @@ public class IHaveMaterialsSettings : ModSettings
         Scribe_Values.Look(ref StonyFromMap, "StonyFromMap", true);
         Scribe_Collections.Look(ref StuffByDefName, "StuffByDefName", LookMode.Value, LookMode.Value);
 
-        if (Scribe.mode == LoadSaveMode.PostLoadInit)
+        if (Scribe.mode != LoadSaveMode.PostLoadInit)
         {
-            StuffByDefName ??= new Dictionary<string, bool>();
-            RebuildStuffIfNeeded();
+            return;
         }
+
+        StuffByDefName ??= new Dictionary<string, bool>();
+        RebuildStuffIfNeeded();
     }
 
     public void DoWindowContents(Rect inRect)
     {
         // Reserve space for scrollbar
-        Rect outRect = inRect;
-        Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, GetViewHeight());
+        var viewRect = new Rect(0f, 0f, inRect.width - 16f, getViewHeight());
 
-        Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
+        Widgets.BeginScrollView(inRect, ref scrollPosition, viewRect);
 
         var listing = new Listing_Standard();
         listing.Begin(viewRect);
@@ -71,7 +72,7 @@ public class IHaveMaterialsSettings : ModSettings
 
         foreach (var pair in Stuff.OrderByDescending(p => p.Key.stuffProps.commonality))
         {
-            bool value = pair.Value;
+            var value = pair.Value;
 
             listing.CheckboxLabeled(
                 "IHaveMaterials_stuff_title".Translate(pair.Key.Named("THING")),
@@ -86,20 +87,27 @@ public class IHaveMaterialsSettings : ModSettings
             StuffByDefName[pair.Key.defName] = value;
         }
 
+        if (IHaveMaterialsMod.CurrentVersion != null)
+        {
+            listing.Gap();
+            GUI.contentColor = Color.gray;
+            listing.Label("IHaveMaterials_CurrentModVersion".Translate(IHaveMaterialsMod.CurrentVersion));
+            GUI.contentColor = Color.white;
+        }
+
         listing.End();
         Widgets.EndScrollView();
     }
 
 
-    private float GetViewHeight()
+    private float getViewHeight()
     {
         // Header + gap
-        float height = 80f;
+        var height = 80f;
 
         // Each checkbox is ~30px, descriptions increase it a bit
         height += Stuff.Count * 32f;
 
         return height;
     }
-
 }

@@ -10,7 +10,7 @@ namespace IHaveMaterials;
 [HarmonyPatch(typeof(Designator_Build), nameof(Designator_Build.ProcessInput), typeof(Event))]
 internal static class Designator_Build_ProcessInput
 {
-    private static readonly MethodInfo CheckCanInteract =
+    private static readonly MethodInfo checkCanInteract =
         AccessTools.Method(typeof(Designator_Build), "CheckCanInteract");
 
     private static readonly FieldInfo stuffDef = AccessTools.Field(typeof(Designator_Build), "stuffDef");
@@ -18,7 +18,7 @@ internal static class Designator_Build_ProcessInput
 
     private static bool Prefix(Designator_Build __instance, BuildableDef ___entDef)
     {
-        if (!(bool)CheckCanInteract.Invoke(__instance, []))
+        if (!(bool)checkCanInteract.Invoke(__instance, []))
         {
             return true;
         }

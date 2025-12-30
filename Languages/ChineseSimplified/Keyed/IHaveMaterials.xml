@@ -5,4 +5,5 @@
   <IHaveMaterials_stonyFromMap_desc>始终显示当前地图上的原生石块。</IHaveMaterials_stonyFromMap_desc>
   <IHaveMaterials_stuff_title>始终显示 {THING_label}</IHaveMaterials_stuff_title>
   <IHaveMaterials_stuff_desc>{DESC}（由{MOD}添加）</IHaveMaterials_stuff_desc>
+  <IHaveMaterials_CurrentModVersion>已安装 MOD 版本：{0}</IHaveMaterials_CurrentModVersion>
 </LanguageData>

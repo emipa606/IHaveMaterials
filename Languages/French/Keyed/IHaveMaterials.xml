@@ -5,4 +5,5 @@
   <IHaveMaterials_stonyFromMap_desc>Affiche toujours les blocs de pierre originaires de la carte actuelle.</IHaveMaterials_stonyFromMap_desc>
   <IHaveMaterials_stuff_title>Toujours montrer {THING_label}</IHaveMaterials_stuff_title>
   <IHaveMaterials_stuff_desc>{DESC}\n\n(Ajouté par {MOD})</IHaveMaterials_stuff_desc>
+  <IHaveMaterials_CurrentModVersion>Version installée du mod : {0}</IHaveMaterials_CurrentModVersion>
 </LanguageData>

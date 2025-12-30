@@ -1,30 +1,40 @@
-# GitHub Copilot Instruction File for RimWorld Modding Project
+# .github/copilot-instructions.md
 
 ## Mod Overview and Purpose
-This RimWorld mod, "IHaveMaterials", enhances the building experience by providing better management of available construction materials. It aims to improve the quality of life for players by making construction activities more intuitive and efficient.
+**Mod Name:** I Have Materials (Continued)
+
+The "I Have Materials (Continued)" mod is an update of Ben Lubars' original mod for RimWorld. This mod enhances the gameplay experience by allowing players to place construction blueprints without having the required materials available on hand. By default, it forces common resources like wood, steel, cloth, and naturally occurring stones on the map to be counted as available, providing greater flexibility and ease of construction.
 
 ## Key Features and Systems
-- **Enhanced Material Management:** The mod introduces a system for tracking and utilizing building materials more effectively.
-- **Improved Build Process:** Modifications to the construction designation improve user interactions and reduce resource wastage.
-  
+- **Always Available Blueprints:** Blueprints can be placed regardless of actual material stock.
+- **Configurable Materials:** Default materials include wood, steel, cloth, and natural stones, but these can be customized through settings.
+- **Seamless Integration:** The mod does not alter save files, allowing safe addition or removal at any point in a game.
+- **Compatibility Precautions:** Conflicts may arise with any mods that replace the `Designator_Build.ProcessInput` function.
+
 ## Coding Patterns and Conventions
-- **Coding Style:** The project follows C# naming conventions with PascalCase for classes and methods. Comments and documentation within the code are minimal, focusing instead on self-descriptive code.
-- **Class Structure:** Classes such as `IHaveMaterials` extend from `ModBase`, encapsulating mod-specific logic.
-- **Internal Static Classes:** Example includes `Designator_Build_ProcessInput_Patch`, indicating it might be used for harmony patching without object instantiation.
+- **Class and Method Definitions:**
+  - The mod includes a few C# files such as `IHaveMaterialsMod.cs`, which defines the main mod class and settings with methods to initialize and manage settings.
+  - The `Designator_Build_ProcessInput` file involves handling the input process for build designators, which is central to the functionality of the mod.
+- **Class Naming Convention:** Classes use PascalCase, such as `IHaveMaterialsMod`.
+- **Method Naming Convention:** Methods also follow PascalCase, for example, `DefsLoaded` and `RebuildStuffIfNeeded`.
 
 ## XML Integration
-- **XML Defs:** While not detailed in the summary, typical XML integration would involve custom `<Defs>` for linking new mod features with the game's existing systems. Ensure XML tags are properly closed and formatted according to RimWorld standards.
-- **XML Strings:** If applicable, provide localized strings in XML to support multiple languages. Use standard tags like `<li>` for item lists.
+- XML integration is not highlighted within this mod but can be used for defining default values or settings if required. The mod primarily relies on C# for processing logic and interaction with RimWorld systems.
 
 ## Harmony Patching
-- **Static Harmony Patches:** Use static classes such as `Designator_Build_ProcessInput_Patch` to apply Harmony patches, modifying base game methods. This involves using Harmony annotations like `[HarmonyPatch(typeof(TargetClass), "TargetMethod")]`.
-- **Method Patching:** Carefully choose between prefix/postfix/transpiler patches based on the required alteration to the game's methods.
+- **Purpose:** Harmony patches are utilized to modify, override, or extend the base game functionalities without directly altering the game's code.
+- **Patch Target:** The primary function targeted is `Designator_Build.ProcessInput`.
+- **Implementation:** Custom static methods are used to apply patches, ensuring the mod interacts correctly with RimWorld's systems.
 
 ## Suggestions for Copilot
-- **Refactoring Help:** Use Copilot to suggest method extractions for large methods or repetitive code patterns to improve readability and maintainability.
-- **Autocompletion:** Leverage Copilot for autocompleting standard patterns in Harmony patching and Def creation.
-- **XML Suggestions:** Get help in completing XML tags and ensuring proper format, especially for mods with extensive XML configurations.
-- **Debugging Assistance:** Copilot can be utilized for generating debug statements to trace mod behavior during runtime.
-- **Localization Support:** Copilot can assist in generating string keys and entries for enabling localization of mod features.
+- **Generate Harmony Patches:** Have Copilot suggest Harmony patches when the base method of a RimWorld class needs modification. Ensure that these patches are done non-destructively.
+- **Assist with Configuration UI:** Utilize Copilot to help create user interfaces for configuring mod settings, especially in the `DoWindowContents` method.
+- **Debugging Helpers:** Incorporate logging suggestions to assist in debugging, useful in the `RebuildStuffIfNeeded` method for tracing material configurations.
+- **Code Consistency:** Use Copilot to ensure coding style consistency across different parts of the mod, maintaining clean and understandable code.
 
-This file should guide developers using GitHub Copilot to efficiently extend and maintain the "IHaveMaterials" mod for RimWorld, ensuring consistency and quality in their code contributions.
+### Additional Tips
+- Always ensure that your modifications can be gracefully integrated with other mods by maintaining minimum dependencies and side effects.
+- Consider using inline comments to explain complex logic, enhancing code readability for future contributors.
+- When debugging, utilize RimWorld's existing tools and log features to provide comprehensive error reports.
+
+This guide is intended to assist future development and maintenance of the mod using GitHub Copilot, ensuring consistency and quality in code practices.
