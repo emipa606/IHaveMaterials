@@ -33,9 +33,12 @@ internal static class Designator_Build_ProcessInput
             (DebugSettings.godMode || __instance.Map.listerThings.ThingsOfDef(d).Count > 0));
 
         // Non-vanilla stuff begins
-        var forced = IHaveMaterials.Instance.Stuff.Where(d => d.Value && d.Key.stuffProps.CanMake(thingDef))
+        var settings = IHaveMaterialsMod.Instance.Settings;
+
+        var forced = settings.Stuff
+            .Where(d => d.Value && d.Key.stuffProps.CanMake(thingDef))
             .Select(d => d.Key);
-        if (IHaveMaterials.Instance.StonyFromMap)
+        if (settings.StonyFromMap)
         {
             var rockWalls = Find.World.NaturalRockTypesIn(__instance.Map.Tile);
             var rockChunks = rockWalls.Select(t => t.building.mineableThing);
