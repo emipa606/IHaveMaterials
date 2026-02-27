@@ -4,6 +4,8 @@
 
 Update of Ben Lubars mod https://steamcommunity.com/sharedfiles/filedetails/?id=2613994109
 
+- Removed HugsLib dependency from 1.6, thanks to Zaljerem!
+
 ![Image](https://img.litet.net/logos/Notice.png)
 	
 ![Image](https://img.litet.net/logos/OriginalDescription.png)
@@ -30,4 +32,4 @@ Conflicts with other mods that replace the Designator_Build.ProcessInput functio
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/IHaveMaterials?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3091169851) | tags:  resources,  construction
+[![Image](https://img.shields.io/github/v/release/emipa606/IHaveMaterials?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3091169851) | tags: resources, construction

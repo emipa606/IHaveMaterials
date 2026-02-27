@@ -1,5 +1,8 @@
 # Changelog for IHaveMaterials
 
+1.6.2 - No longer issues on Orbital Maps, thanks Yato0226
+
+
 1.6.1 - Removed HugsLib requirement, thanks Zaljerem!
 Used DeepL to update translations for ChineseSimplified, French, German
 

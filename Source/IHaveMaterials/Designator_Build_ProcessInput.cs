@@ -34,22 +34,25 @@ internal static class Designator_Build_ProcessInput
         }
 
         var vanilla = __instance.Map.resourceCounter.AllCountedAmounts.Keys.Where(d =>
-            d != null && d.IsStuff && d.stuffProps != null && d.stuffProps.CanMake(thingDef) &&
+            d is { IsStuff: true, stuffProps: not null } && d.stuffProps.CanMake(thingDef) &&
             (DebugSettings.godMode || __instance.Map.listerThings.ThingsOfDef(d).Count > 0));
 
         // Non-vanilla stuff begins
         var settings = IHaveMaterialsMod.Instance?.Settings;
 
         var forced = settings?.Stuff
-            .Where(d => d.Key != null && d.Value && d.Key.stuffProps != null && d.Key.stuffProps.CanMake(thingDef))
-            .Select(d => d.Key) ?? Enumerable.Empty<ThingDef>();
+            .Where(d => d is { Key.stuffProps: not null, Value: true } && d.Key.stuffProps.CanMake(thingDef))
+            .Select(d => d.Key) ?? [];
         if (settings?.StonyFromMap == true)
         {
             var rockWalls = Find.World.NaturalRockTypesIn(__instance.Map.Tile);
-            var rockChunks = rockWalls.Where(t => t?.building?.mineableThing != null).Select(t => t.building.mineableThing);
-            var rockBlocks = rockChunks.Where(d => d != null).SelectMany(d => (d.butcherProducts ?? Enumerable.Empty<ThingDefCountClass>()).Where(p => p?.thingDef != null).Select(p => p.thingDef));
+            var rockChunks = rockWalls.Where(t => t?.building?.mineableThing != null)
+                .Select(t => t.building.mineableThing);
+            var rockBlocks = rockChunks.SelectMany(d =>
+                (d.butcherProducts ?? Enumerable.Empty<ThingDefCountClass>()).Where(p => p?.thingDef != null)
+                .Select(p => p.thingDef));
             forced = forced.Union(rockChunks.Concat(rockBlocks)
-                .Where(d => d != null && d.IsStuff && d.stuffProps != null && d.stuffProps.CanMake(thingDef)));
+                .Where(d => d is { IsStuff: true, stuffProps: not null } && d.stuffProps.CanMake(thingDef)));
         }
 
         var merged = vanilla.Union(forced).Where(d => d.stuffProps != null)
@@ -67,7 +70,8 @@ internal static class Designator_Build_ProcessInput
             }
             else
             {
-                label = "ThingMadeOfStuffLabel".Translate(item.LabelAsStuff ?? item.label, __instance.sourcePrecept.Label ?? "");
+                label = "ThingMadeOfStuffLabel".Translate(item.LabelAsStuff ?? item.label,
+                    __instance.sourcePrecept.Label ?? "");
             }
 
             return new FloatMenuOption((label ?? "").CapitalizeFirst(), delegate
